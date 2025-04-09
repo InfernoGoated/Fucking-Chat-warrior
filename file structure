@@ -1,0 +1,10 @@
+/public
+   /files         <-- Upload your files here
+   /css
+      style.css
+   /icons
+      file-icon.png
+      folder-icon.png
+   index.html
+server.js
+package.json
