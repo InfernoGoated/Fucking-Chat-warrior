@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Browser</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>File Browser</h1>
+            <p id="path-display">/files</p>
+        </header>
+        
+        <div class="toolbar">
+            <button id="refresh-btn">Refresh</button>
+            <input type="text" id="search" placeholder="Search files...">
+        </div>
+        
+        <div class="file-list">
+            <div class="file-list-header">
+                <div class="file-name">Name</div>
+                <div class="file-size">Size</div>
+                <div class="file-modified">Modified</div>
+            </div>
+            <div id="file-list-content"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fileList = document.getElementById('file-list-content');
+            const searchInput = document.getElementById('search');
+            const refreshBtn = document.getElementById('refresh-btn');
+            
+            // Load files
+            function loadFiles() {
+                fetch('/api/files')
+                    .then(response => response.json())
+                    .then(files => {
+                        renderFiles(files);
+                    })
+                    .catch(error => {
+                        console.error('Error loading files:', error);
+                        fileList.innerHTML = '<div class="error">Unable to load files</div>';
+                    });
+            }
+            
+            // Render files
+            function renderFiles(files) {
+                fileList.innerHTML = '';
+                
+                if (files.length === 0) {
+                    fileList.innerHTML = '<div class="empty">No files found</div>';
+                    return;
+                }
+                
+                files.forEach(file => {
+                    const fileElement = document.createElement('div');
+                    fileElement.className = 'file-item';
+                    
+                    fileElement.innerHTML = `
+                        <div class="file-name">
+                            <img src="/icons/${file.type === 'directory' ? 'folder' : 'file'}-icon.png" 
+                                 alt="${file.type}" class="file-icon">
+                            <a href="${file.path}" ${file.type === 'file' ? 'download' : ''}>${file.name}</a>
+                        </div>
+                        <div class="file-size">${formatFileSize(file.size)}</div>
+                        <div class="file-modified">${new Date(file.modified).toLocaleString()}</div>
+                    `;
+                    
+                    fileList.appendChild(fileElement);
+                });
+            }
+            
+            // Format file size
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+            
+            // Search functionality
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                const fileItems = document.querySelectorAll('.file-item');
+                
+                fileItems.forEach(item => {
+                    const fileName = item.querySelector('.file-name').textContent.toLowerCase();
+                    item.style.display = fileName.includes(searchTerm) ? '' : 'none';
+                });
+            });
+            
+            // Refresh button
+            refreshBtn.addEventListener('click', loadFiles);
+            
+            // Initial load
+            loadFiles();
+        });
+    </script>
+</body>
+</html>
