@@ -1,0 +1,137 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+#path-display {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #bdc3c7;
+}
+
+.toolbar {
+    padding: 15px 20px;
+    background: #ecf0f1;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    gap: 10px;
+}
+
+#search {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#refresh-btn {
+    padding: 8px 16px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#refresh-btn:hover {
+    background: #2980b9;
+}
+
+.file-list {
+    padding: 0;
+}
+
+.file-list-header {
+    display: flex;
+    padding: 12px 20px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+}
+
+.file-list-header .file-name {
+    flex: 1;
+}
+
+.file-list-header .file-size {
+    width: 120px;
+}
+
+.file-list-header .file-modified {
+    width: 200px;
+}
+
+.file-item {
+    display: flex;
+    padding: 12px 20px;
+    border-bottom: 1px solid #eee;
+    align-items: center;
+}
+
+.file-item:hover {
+    background-color: #f9f9f9;
+}
+
+.file-name {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.file-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+.file-size {
+    width: 120px;
+    color: #7f8c8d;
+}
+
+.file-modified {
+    width: 200px;
+    color: #7f8c8d;
+}
+
+.empty, .error {
+    padding: 20px;
+    text-align: center;
+    color: #7f8c8d;
+}
+
+.error {
+    color: #e74c3c;
+}
+
+a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
